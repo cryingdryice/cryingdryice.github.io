@@ -15,6 +15,24 @@ const Home = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const constellation = [
+        { x: 690, y: 590 },
+        { x: 759, y: 521 }, 
+        { x: 862, y: 268 }, 
+        { x: 989, y: 210 },  
+        { x: 966, y: 153 },  
+        { x: 1092, y: 199 }, 
+        { x: 1219, y: 268 }, 
+        { x: 1219, y: 325 },
+        { x: 1265, y: 360 },
+        { x: 1242, y: 406 }, 
+        { x: 1138, y: 383 },
+        { x: 1000, y: 406 }, 
+        { x: 816, y: 532 }, 
+        { x: 828, y: 624 },
+        { x: 770, y: 578 }
+    ];
+
     // 별 생성
     function createStars() {
       for (let i = 0; i < numStars; i++) {
@@ -31,30 +49,58 @@ const Home = () => {
     // 별 그리기
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
       stars.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
         ctx.fill();
 
-        // 반짝이는 효과
         star.alpha += star.speed;
         if (star.alpha >= 1 || star.alpha <= 0) {
           star.speed = -star.speed;
         }
       });
 
-      animationFrameIdRef.current = requestAnimationFrame(drawStars); // 애니메이션 루프를 지속
+      ctx.beginPath();
+      ctx.lineWidth = 0.7; 
+      ctx.strokeStyle = 'white';
+
+      ctx.moveTo(constellation[0].x, constellation[0].y);
+
+      for (let i = 1; i < constellation.length; i++) {
+        ctx.lineTo(constellation[i].x, constellation[i].y);
+      }
+
+      ctx.closePath(); 
+
+      ctx.stroke();
+
+      constellation.forEach((star) => {
+
+        for (let i = 10; i > 0; i--) { 
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, i * 3, 0, 2 * Math.PI, false);
+          ctx.fillStyle = `rgba(255, 255, 255, ${0.1 / i})`; 
+          ctx.fill();
+        }
+      
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, 3, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'white'; 
+        ctx.fill();
+      });
+
+      animationFrameIdRef.current = requestAnimationFrame(drawStars);
     }
 
     createStars();
-    drawStars(); // 애니메이션 시작
+    drawStars();
 
-    // 화면 크기 변경 처리
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // 리사이즈 시 캔버스 클리어
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
 
     window.addEventListener('resize', handleResize);
@@ -68,7 +114,7 @@ const Home = () => {
   return (
     <div className="home-container">
       <canvas ref={canvasRef} id="star-canvas"></canvas>
-      <TypingTitle title={"Hello!🖐️ Welcome to Jiwon Park's blog🐬"} />
+      <TypingTitle title={"Hello!🖐️ Welcome to Jiwon Park's Universe of Ideas🐬"} />
     </div>
   );
 };
