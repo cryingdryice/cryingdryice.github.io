@@ -1,0 +1,21 @@
+.home-container {
+    background-color: #0a0f29;
+    background-image: linear-gradient(180deg, #070a1b 0%, #141b2c 70%, #262e3d 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#star-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  

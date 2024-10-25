@@ -1,0 +1,30 @@
+.h1-title {
+    font-size: 3rem;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+  }
+  
+  .last-char {
+    text-decoration: underline;
+  }
+  
+  .cursor {
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: normal;
+    font-size: 3rem;
+    color: white;
+    opacity: 1;
+  }
+
+  .blinking {
+    animation: blink 0.9s infinite;
+  }
+  
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
