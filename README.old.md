@@ -1,2 +1,0 @@
-# cryingdryice.github.io
-🐬
