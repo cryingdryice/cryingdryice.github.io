@@ -1,10 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+import { useAnimation } from 'framer-motion';
 import '../styles/Home.scss';
 import TypingTitle from '../components/home/TypingTitle';
+import StarNavbar from '../components/home/StarNavbar';
+import ScrollContent from '../components/home/ScrollContent';
 
 const Home = () => {
   const canvasRef = useRef(null);
   const animationFrameIdRef = useRef(null);
+  const controls = useAnimation();
+  const titleControls = useAnimation();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,7 +21,7 @@ const Home = () => {
     canvas.height = window.innerHeight;
 
     const constellation = [
-        { x: 690, y: 590 },
+      { x: 690, y: 590 },
         { x: 759, y: 521 }, 
         { x: 862, y: 268 }, 
         { x: 989, y: 210 },  
@@ -33,7 +38,6 @@ const Home = () => {
         { x: 770, y: 578 }
     ];
 
-    // 별 생성
     function createStars() {
       for (let i = 0; i < numStars; i++) {
         stars.push({
@@ -46,7 +50,6 @@ const Home = () => {
       }
     }
 
-    // 별 그리기
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -77,7 +80,6 @@ const Home = () => {
       ctx.stroke();
 
       constellation.forEach((star) => {
-
         for (let i = 10; i > 0; i--) { 
           ctx.beginPath();
           ctx.arc(star.x, star.y, i * 3, 0, 2 * Math.PI, false);
@@ -105,16 +107,52 @@ const Home = () => {
 
     window.addEventListener('resize', handleResize);
 
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      // console.log(scrollY);
+
+      if (scrollY > 20) {
+        controls.start({
+          y: 80,
+          opacity: 1,
+          transition: { duration: 1, ease: 'easeOut' }
+        });
+
+        titleControls.start({
+          y: 0,
+          transition: { duration: 1, ease: 'easeOut' }
+        });
+      }else{
+        controls.start({
+          y: 100,
+          opacity: 1,
+          transition: { duration: 1, ease: 'easeOut' }
+        });
+
+        titleControls.start({
+          y: 10,
+          transition: { duration: 1, ease: 'easeOut' }
+        });
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationFrameIdRef.current);
     };
-  }, []);
+  }, [controls]);
 
   return (
     <div className="home-container">
       <canvas ref={canvasRef} id="star-canvas"></canvas>
-      <TypingTitle title={"Hello!🖐️ Welcome to Jiwon Park's Universe of Ideas🐬"} />
+      <StarNavbar />
+      <section>
+        <TypingTitle title={"Hello!🖐️ Welcome to Jiwon Park's Universe of Ideas🐬"} controls={titleControls} />
+        <ScrollContent controls={controls} />
+      </section>
     </div>
   );
 };

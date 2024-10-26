@@ -1,21 +1,34 @@
 .home-container {
+    height: 105vh;
     background-color: #0a0f29;
     background-image: linear-gradient(180deg, #070a1b 0%, #141b2c 70%, #262e3d 100%);
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+
+    #star-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    section {
+        position: relative;
+        z-index: 1;
+        height: 80vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // flex-direction: column;
+    }
 }
 
-#star-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
+
   

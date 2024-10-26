@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/TypingTitle.scss';
+import { motion } from 'framer-motion';
 
-const TypingTitle = ({ title }) => {
+const TypingTitle = ({ title, controls }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [index, setIndex] = useState(0);
   const [isTypingDone, setIsTypingDone] = useState(false);
 
   useEffect(() => {
     if (index < title.length) {
-      const randomDelay = Math.floor(Math.random() * (150 - 10 + 1)) + 50;
+      const randomDelay = Math.floor(Math.random() * (150 - 30 + 1)) + 30;
 
       const timeoutId = setTimeout(() => {
         setDisplayedText((prev) => prev + title[index]);
@@ -27,11 +28,16 @@ const TypingTitle = ({ title }) => {
   const restText = displayedText.slice(0, -1);
 
   return (
-    <h1 className="h1-title">
+    <motion.div
+      className='h1-title'
+      initial={{ y: 0}}
+      animate={controls}
+    >
       {restText}
       <span className="last-char">{lastChar}</span>
       <span className={`cursor ${isTypingDone ? 'blinking' : ''}`}>|</span>
-    </h1>
+    </motion.div>
+
   );
 };
 
